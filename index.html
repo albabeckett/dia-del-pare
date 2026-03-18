@@ -18,13 +18,14 @@
             align-items: center;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Arial', sans-serif;
-            overflow: hidden;
+            overflow: auto;  /* Cambiado de hidden a auto */
+            padding: 20px;
         }
 
         .container {
             position: relative;
-            width: 400px;
-            height: 300px;
+            width: 500px;
+            height: 700px;
             cursor: pointer;
         }
 
@@ -42,9 +43,9 @@
             position: absolute;
             width: 0;
             height: 0;
-            border-left: 200px solid transparent;
-            border-right: 200px solid transparent;
-            border-top: 150px solid #e8d4a8;
+            border-left: 250px solid transparent;
+            border-right: 250px solid transparent;
+            border-top: 350px solid #e8d4a8;
             top: 0;
             left: 0;
             border-radius: 10px 10px 0 0;
@@ -63,9 +64,9 @@
             position: absolute;
             width: 0;
             height: 0;
-            border-left: 200px solid #d4c4a1;
-            border-right: 200px solid #d4c4a1;
-            border-bottom: 150px solid #d4c4a1;
+            border-left: 250px solid #d4c4a1;
+            border-right: 250px solid #d4c4a1;
+            border-bottom: 350px solid #d4c4a1;
             bottom: 0;
             left: 0;
             border-radius: 0 0 10px 10px;
@@ -77,8 +78,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%;
-            height: 85%;
+            width: 92%;
+            height: 95%;
             background: white;
             border-radius: 5px;
             overflow: hidden;
@@ -88,7 +89,7 @@
         }
 
         .envelope.open .letter {
-            transform: translate(-50%, -150%);
+            transform: translate(-50%, -120%);
             z-index: 2;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
@@ -96,7 +97,7 @@
         .letter img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .instruction {
@@ -116,22 +117,6 @@
             opacity: 0;
         }
 
-        .click-hint {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 4;
-            pointer-events: none;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Sello decorativo */
         .stamp {
             position: absolute;
             top: 20px;
@@ -149,6 +134,26 @@
             font-size: 12px;
             transform: rotate(5deg);
         }
+
+        /* Responsive para móviles */
+        @media (max-width: 600px) {
+            .container {
+                width: 350px;
+                height: 490px;
+            }
+            
+            .envelope::before {
+                border-left: 175px solid transparent;
+                border-right: 175px solid transparent;
+                border-top: 245px solid #e8d4a8;
+            }
+            
+            .envelope::after {
+                border-left: 175px solid #d4c4a1;
+                border-right: 175px solid #d4c4a1;
+                border-bottom: 245px solid #d4c4a1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -156,7 +161,7 @@
         <div class="envelope" id="envelope">
             <div class="stamp">💌</div>
             <div class="letter">
-                <!-- CAMBIA ESTA URL POR TU IMAGEN -->
+                <!-- CAMBIA ESTA RUTA POR TU IMAGEN -->
                 <img src="felicitacio.jpg" alt="Moltes felicitats">
             </div>
         </div>
@@ -167,13 +172,8 @@
         function toggleEnvelope() {
             const envelope = document.getElementById('envelope');
             envelope.classList.toggle('open');
-            
-            // Reproducir sonido opcional (descomenta si quieres añadir sonido)
-            // const audio = new Audio('path-to-sound.mp3');
-            // audio.play();
         }
 
-        // Cerrar el sobre si se hace clic fuera (opcional)
         document.addEventListener('click', function(e) {
             const container = document.querySelector('.container');
             const envelope = document.getElementById('envelope');
