@@ -4,184 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Interactivo</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: 'Arial', sans-serif;
-            overflow: auto;  /* Cambiado de hidden a auto */
-            padding: 20px;
-        }
-
-        .container {
-            position: relative;
-            width: 500px;
-            height: 700px;
-            cursor: pointer;
-        }
-
-        .envelope {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: #f4e4c1;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .envelope::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 250px solid transparent;
-            border-right: 250px solid transparent;
-            border-top: 350px solid #e8d4a8;
-            top: 0;
-            left: 0;
-            border-radius: 10px 10px 0 0;
-            transform-origin: top;
-            transition: transform 0.6s ease;
-            z-index: 3;
-        }
-
-        .envelope.open::before {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-
-        .envelope::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 250px solid #d4c4a1;
-            border-right: 250px solid #d4c4a1;
-            border-bottom: 350px solid #d4c4a1;
-            bottom: 0;
-            left: 0;
-            border-radius: 0 0 10px 10px;
-            z-index: 2;
-        }
-
-        .letter {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 92%;
-            height: 95%;
-            background: white;
-            border-radius: 5px;
-            overflow: hidden;
-            z-index: 1;
-            transition: all 0.8s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .envelope.open .letter {
-            transform: translate(-50%, -120%);
-            z-index: 2;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-
-        .letter img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .instruction {
-            position: absolute;
-            bottom: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 18px;
-            text-align: center;
-            opacity: 1;
-            transition: opacity 0.3s;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .envelope.open + .instruction {
-            opacity: 0;
-        }
-
-        .stamp {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 60px;
-            height: 70px;
-            background: #c9a86c;
-            border: 3px solid #b8985c;
-            z-index: 4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #8b7355;
-            font-size: 12px;
-            transform: rotate(5deg);
-        }
-
-        /* Responsive para móviles */
-        @media (max-width: 600px) {
-            .container {
-                width: 350px;
-                height: 490px;
-            }
-            
-            .envelope::before {
-                border-left: 175px solid transparent;
-                border-right: 175px solid transparent;
-                border-top: 245px solid #e8d4a8;
-            }
-            
-            .envelope::after {
-                border-left: 175px solid #d4c4a1;
-                border-right: 175px solid #d4c4a1;
-                border-bottom: 245px solid #d4c4a1;
-            }
-        }
-    </style>
+    <!-- Ya no lleva "css/" -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container" onclick="toggleEnvelope()">
         <div class="envelope" id="envelope">
             <div class="stamp">💌</div>
             <div class="letter">
-                <!-- CAMBIA ESTA RUTA POR TU IMAGEN -->
-                <img src="felicitacio.jpg" alt="Moltes felicitats">
+                <!-- Ya no lleva "images/" -->
+                <img src="tu-imagen.jpg" alt="Imagen dentro del sobre">
             </div>
         </div>
-        <div class="instruction">Fes clic per obrir el sobre</div>
+        <div class="instruction">Haz clic en el sobre para abrirlo</div>
     </div>
 
-    <script>
-        function toggleEnvelope() {
-            const envelope = document.getElementById('envelope');
-            envelope.classList.toggle('open');
-        }
-
-        document.addEventListener('click', function(e) {
-            const container = document.querySelector('.container');
-            const envelope = document.getElementById('envelope');
-            
-            if (!container.contains(e.target) && envelope.classList.contains('open')) {
-                envelope.classList.remove('open');
-            }
-        });
-    </script>
+    <!-- Ya no lleva "js/" -->
+    <script src="script.js"></script>
 </body>
 </html>
