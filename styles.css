@@ -1,5 +1,5 @@
 /* =============================================
-   SOBRE INTERACTIVO - HOJA DE ESTILOS
+   SOBRE INTERACTIVO - EL SOBRE DESAPARECE
    ============================================= */
 
 * {
@@ -15,98 +15,133 @@ body {
     align-items: center;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     font-family: 'Arial', sans-serif;
-    overflow-y: auto;      /* Permite scroll vertical */
-    overflow-x: hidden;    /* Evita scroll horizontal */
+    overflow: auto;
     padding: 20px;
 }
 
 .container {
     position: relative;
     width: 500px;
-    height: 700px;
-    cursor: pointer;
-    flex-shrink: 0;        /* Evita que el contenedor se encoja */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+/* =============================================
+   SOBRE
+   ============================================= */
 
 .envelope {
     position: relative;
     width: 100%;
-    height: 100%;
-    background: #f4e4c1;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    height: 350px;
+    cursor: pointer;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.envelope::before {
-    content: '';
+/* El sobre desaparece cuando está abierto */
+.envelope.open {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.1);
+}
+
+/* Solapa superior (triángulo) */
+.flap {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 0;
     height: 0;
     border-left: 250px solid transparent;
     border-right: 250px solid transparent;
-    border-top: 350px solid #e8d4a8;
-    top: 0;
-    left: 0;
-    border-radius: 10px 10px 0 0;
-    transform-origin: top;
-    transition: transform 0.6s ease;
+    border-top: 180px solid #e8d4a8;
     z-index: 3;
+    transform-origin: top;
+    transition: transform 0.5s ease;
 }
 
-.envelope.open::before {
+.envelope.open .flap {
     transform: rotateX(180deg);
     z-index: 1;
 }
 
-.envelope::after {
-    content: '';
+/* Bolsillo frontal del sobre */
+.pocket {
     position: absolute;
+    bottom: 0;
+    left: 0;
     width: 0;
     height: 0;
     border-left: 250px solid #d4c4a1;
     border-right: 250px solid #d4c4a1;
-    border-bottom: 350px solid #d4c4a1;
-    bottom: 0;
-    left: 0;
-    border-radius: 0 0 10px 10px;
+    border-bottom: 200px solid #d4c4a1;
     z-index: 2;
+    border-radius: 0 0 10px 10px;
 }
+
+/* Base del sobre */
+.envelope::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f4e4c1;
+    border-radius: 0 0 10px 10px;
+    z-index: 1;
+}
+
+/* =============================================
+   CARTA E IMAGEN
+   ============================================= */
 
 .letter {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 92%;
-    height: 95%;
+    width: 90%;
+    height: 90%;
     background: white;
     border-radius: 5px;
     overflow: hidden;
     z-index: 1;
-    transition: all 0.8s ease;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.8s ease;
 }
 
-/* Cuando el sobre se abre, la carta sale más arriba */
+/* Cuando el sobre se abre, la carta crece y se muestra completa */
 .envelope.open .letter {
-    transform: translate(-50%, -150%);  /* Aumentado de -120% a -150% */
-    z-index: 2;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 500px;
     height: auto;
-    max-height: 80vh;
+    max-height: none;
+    margin-top: 20px;
+    z-index: 10;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
 }
 
 .letter img {
     width: 100%;
-    height: auto;            /* Mantiene proporción original */
-    object-fit: contain;     /* Muestra imagen completa sin recortar */
+    height: auto;
+    object-fit: contain;
     display: block;
 }
 
+/* =============================================
+   SELLO
+   ============================================= */
+
 .stamp {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 15px;
     width: 60px;
     height: 70px;
     background: #c9a86c;
@@ -121,124 +156,101 @@ body {
     transform: rotate(5deg);
 }
 
+/* =============================================
+   INSTRUCCIÓN Y BOTÓN
+   ============================================= */
+
 .instruction {
-    position: absolute;
-    bottom: -60px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-top: 20px;
     color: white;
     font-size: 18px;
     text-align: center;
-    opacity: 1;
-    transition: opacity 0.3s;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    white-space: nowrap;
+    transition: opacity 0.5s ease;
 }
 
-.envelope.open + .instruction {
+.instruction.hidden {
     opacity: 0;
-}
-
-/* =============================================
-   ESPACIO ADICIONAL PARA SCROLL
-   ============================================= */
-
-/* Elemento invisible que añade espacio arriba cuando el sobre se abre */
-.scroll-spacer {
-    position: absolute;
-    top: -600px;
-    left: 0;
-    width: 100%;
-    height: 600px;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.8s ease;
 }
 
-.envelope.open ~ .scroll-spacer {
-    opacity: 1;
+/* Botón para cerrar la carta */
+.close-btn {
+    display: none;
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: white;
+    color: #764ba2;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.close-btn.visible {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* =============================================
    RESPONSIVE
    ============================================= */
 
-@media (max-width: 768px) {
-    .container {
-        width: 400px;
-        height: 560px;
-    }
-    
-    .envelope::before {
-        border-left: 200px solid transparent;
-        border-right: 200px solid transparent;
-        border-top: 280px solid #e8d4a8;
-    }
-    
-    .envelope::after {
-        border-left: 200px solid #d4c4a1;
-        border-right: 200px solid #d4c4a1;
-        border-bottom: 280px solid #d4c4a1;
-    }
-    
-    .instruction {
-        font-size: 16px;
-        bottom: -50px;
-    }
-}
-
 @media (max-width: 600px) {
     .container {
         width: 350px;
-        height: 490px;
     }
     
-    .envelope::before {
+    .envelope {
+        height: 245px;
+    }
+    
+    .flap {
         border-left: 175px solid transparent;
         border-right: 175px solid transparent;
-        border-top: 245px solid #e8d4a8;
+        border-top: 125px solid #e8d4a8;
     }
     
-    .envelope::after {
+    .pocket {
         border-left: 175px solid #d4c4a1;
         border-right: 175px solid #d4c4a1;
-        border-bottom: 245px solid #d4c4a1;
+        border-bottom: 140px solid #d4c4a1;
     }
     
     .stamp {
         width: 50px;
         height: 60px;
         font-size: 10px;
-        top: 15px;
-        right: 15px;
+        top: 10px;
+        right: 10px;
     }
     
     .instruction {
         font-size: 14px;
-        bottom: -45px;
-    }
-}
-
-@media (max-width: 400px) {
-    .container {
-        width: 300px;
-        height: 420px;
     }
     
-    .envelope::before {
-        border-left: 150px solid transparent;
-        border-right: 150px solid transparent;
-        border-top: 210px solid #e8d4a8;
-    }
-    
-    .envelope::after {
-        border-left: 150px solid #d4c4a1;
-        border-right: 150px solid #d4c4a1;
-        border-bottom: 210px solid #d4c4a1;
-    }
-    
-    body {
-        padding: 10px;
+    .close-btn {
+        padding: 10px 25px;
+        font-size: 14px;
     }
 }
 
@@ -246,21 +258,12 @@ body {
    ACCESIBILIDAD
    ============================================= */
 
-@media (prefers-contrast: high) {
-    .envelope {
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-    
-    .instruction {
-        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-    }
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .envelope::before,
+    .envelope,
+    .flap,
     .letter,
     .instruction,
-    .scroll-spacer {
+    .close-btn {
         transition: none;
     }
 }

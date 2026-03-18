@@ -3,69 +3,61 @@
    ============================================= */
 
 /**
- * Alternar la apertura/cierre del sobre con scroll automático
+ * Abrir el sobre (desaparece y muestra la carta)
  */
 function toggleEnvelope() {
     const envelope = document.getElementById('envelope');
-    const isOpening = !envelope.classList.contains('open');
+    const instruction = document.getElementById('instruction');
+    const closeBtn = document.getElementById('closeBtn');
     
-    envelope.classList.toggle('open');
+    envelope.classList.add('open');
+    instruction.classList.add('hidden');
+    closeBtn.classList.add('visible');
     
-    // Scroll automático cuando se abre el sobre
-    if (isOpening) {
-        setTimeout(() => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'  // Scroll suave
-            });
-        }, 400);  // Espera a que la animación esté halfway
-    }
+    // Scroll suave hacia arriba para ver la carta completa
+    setTimeout(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }, 300);
 }
 
 /**
- * Cerrar el sobre si se hace clic fuera de él
+ * Cerrar la carta (vuelve a mostrar el sobre)
  */
-document.addEventListener('click', function(e) {
-    const container = document.querySelector('.container');
+function closeEnvelope() {
     const envelope = document.getElementById('envelope');
+    const instruction = document.getElementById('instruction');
+    const closeBtn = document.getElementById('closeBtn');
     
-    if (!container.contains(e.target) && envelope.classList.contains('open')) {
-        envelope.classList.remove('open');
-        
-        // Scroll de vuelta al centro cuando se cierra
-        setTimeout(() => {
-            window.scrollTo({
-                top: document.body.scrollHeight / 2 - window.innerHeight / 2,
-                behavior: 'smooth'
-            });
-        }, 400);
-    }
-});
+    envelope.classList.remove('open');
+    instruction.classList.remove('hidden');
+    closeBtn.classList.remove('visible');
+    
+    // Scroll de vuelta al centro
+    setTimeout(() => {
+        window.scrollTo({
+            top: document.body.scrollHeight / 2 - window.innerHeight / 2,
+            behavior: 'smooth'
+        });
+    }, 300);
+}
 
 /**
- * Abrir/cerrar con la tecla Enter o Espacio
+ * Cerrar con la tecla Escape
  */
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();  // Evita scroll con espacio
-        const envelope = document.getElementById('envelope');
-        const isOpening = !envelope.classList.contains('open');
-        
-        envelope.classList.toggle('open');
-        
-        if (isOpening) {
-            setTimeout(() => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }, 400);
+    if (e.key === 'Escape') {
+        const closeBtn = document.getElementById('closeBtn');
+        if (closeBtn.classList.contains('visible')) {
+            closeEnvelope();
         }
     }
 });
 
 /**
- * Opcional: Scroll automático al cargar la página (centrado)
+ * Centrar la página al cargar
  */
 window.addEventListener('load', function() {
     window.scrollTo({

@@ -7,14 +7,17 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container" onclick="toggleEnvelope()">
-        <div class="envelope" id="envelope">
+    <div class="container">
+        <div class="envelope" id="envelope" onclick="toggleEnvelope()">
             <div class="stamp">💌</div>
+            <div class="flap"></div>
+            <div class="pocket"></div>
             <div class="letter">
                 <img src="felicitacio.jpg" alt="Moltes felicitats">
             </div>
         </div>
-        <div class="instruction">Fes clic per obrir el sobre</div>
+        <div class="instruction" id="instruction">Fes clic per obrir el sobre</div>
+        <button class="close-btn" id="closeBtn" onclick="closeEnvelope()">✕ Tancar</button>
     </div>
 
     <script src="script.js"></script>
