@@ -1,5 +1,5 @@
 /* =============================================
-   SOBRE INTERACTIVO - EL SOBRE DESAPARECE
+   SOBRE INTERACTIVO - CORREGIDO
    ============================================= */
 
 * {
@@ -28,7 +28,7 @@ body {
 }
 
 /* =============================================
-   SOBRE
+   SOBRE (ELEMENTOS SEPARADOS)
    ============================================= */
 
 .envelope {
@@ -37,6 +37,7 @@ body {
     height: 350px;
     cursor: pointer;
     transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 5;
 }
 
 /* El sobre desaparece cuando está abierto */
@@ -57,13 +58,6 @@ body {
     border-right: 250px solid transparent;
     border-top: 180px solid #e8d4a8;
     z-index: 3;
-    transform-origin: top;
-    transition: transform 0.5s ease;
-}
-
-.envelope.open .flap {
-    transform: rotateX(180deg);
-    z-index: 1;
 }
 
 /* Bolsillo frontal del sobre */
@@ -81,8 +75,7 @@ body {
 }
 
 /* Base del sobre */
-.envelope::before {
-    content: '';
+.envelope-base {
     position: absolute;
     top: 0;
     left: 0;
@@ -94,36 +87,32 @@ body {
 }
 
 /* =============================================
-   CARTA E IMAGEN
+   CARTA (CONTENEDOR SEPARADO)
    ============================================= */
 
+.letter-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    z-index: 10;
+}
+
+/* La carta se muestra cuando el sobre está abierto */
+.letter-container.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
 .letter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    height: 90%;
     background: white;
     border-radius: 5px;
     overflow: hidden;
-    z-index: 1;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.8s ease;
-}
-
-/* Cuando el sobre se abre, la carta crece y se muestra completa */
-.envelope.open .letter {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    max-height: none;
-    margin-top: 20px;
-    z-index: 10;
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
 }
 
@@ -260,8 +249,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
     .envelope,
-    .flap,
-    .letter,
+    .letter-container,
     .instruction,
     .close-btn {
         transition: none;

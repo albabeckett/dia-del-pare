@@ -1,17 +1,26 @@
 /* =============================================
-   SOBRE INTERACTIVO - JAVASCRIPT
+   SOBRE INTERACTIVO - JAVASCRIPT CORREGIDO
    ============================================= */
 
 /**
  * Abrir el sobre (desaparece y muestra la carta)
  */
-function toggleEnvelope() {
+function openEnvelope() {
     const envelope = document.getElementById('envelope');
+    const letterContainer = document.getElementById('letterContainer');
     const instruction = document.getElementById('instruction');
     const closeBtn = document.getElementById('closeBtn');
     
+    // Ocultar sobre
     envelope.classList.add('open');
+    
+    // Mostrar carta
+    letterContainer.classList.add('visible');
+    
+    // Ocultar instrucción
     instruction.classList.add('hidden');
+    
+    // Mostrar botón de cerrar
     closeBtn.classList.add('visible');
     
     // Scroll suave hacia arriba para ver la carta completa
@@ -28,11 +37,20 @@ function toggleEnvelope() {
  */
 function closeEnvelope() {
     const envelope = document.getElementById('envelope');
+    const letterContainer = document.getElementById('letterContainer');
     const instruction = document.getElementById('instruction');
     const closeBtn = document.getElementById('closeBtn');
     
+    // Mostrar sobre
     envelope.classList.remove('open');
+    
+    // Ocultar carta
+    letterContainer.classList.remove('visible');
+    
+    // Mostrar instrucción
     instruction.classList.remove('hidden');
+    
+    // Ocultar botón de cerrar
     closeBtn.classList.remove('visible');
     
     // Scroll de vuelta al centro
