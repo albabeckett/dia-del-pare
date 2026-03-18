@@ -1,85 +1,64 @@
-/* =============================================
-   SOBRE INTERACTIVO - JAVASCRIPT CORREGIDO
-   ============================================= */
-
-/**
- * Abrir el sobre (desaparece y muestra la carta)
- */
-function openEnvelope() {
+// Esperar a que el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Obtener elementos
     const envelope = document.getElementById('envelope');
     const letterContainer = document.getElementById('letterContainer');
     const instruction = document.getElementById('instruction');
     const closeBtn = document.getElementById('closeBtn');
     
-    // Ocultar sobre
-    envelope.classList.add('open');
+    // Función para abrir el sobre
+    function openEnvelope() {
+        console.log('Abriendo sobre...'); // Para debug
+        
+        envelope.classList.add('open');
+        letterContainer.classList.add('visible');
+        instruction.classList.add('hidden');
+        closeBtn.classList.add('visible');
+        
+        // Scroll hacia arriba
+        setTimeout(function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }, 300);
+    }
     
-    // Mostrar carta
-    letterContainer.classList.add('visible');
+    // Función para cerrar el sobre
+    function closeEnvelope() {
+        console.log('Cerrando sobre...'); // Para debug
+        
+        envelope.classList.remove('open');
+        letterContainer.classList.remove('visible');
+        instruction.classList.remove('hidden');
+        closeBtn.classList.remove('visible');
+        
+        // Scroll de vuelta al centro
+        setTimeout(function() {
+            window.scrollTo({
+                top: document.body.scrollHeight / 2 - window.innerHeight / 2,
+                behavior: 'smooth'
+            });
+        }, 300);
+    }
     
-    // Ocultar instrucción
-    instruction.classList.add('hidden');
+    // Añadir event listeners
+    envelope.addEventListener('click', openEnvelope);
+    closeBtn.addEventListener('click', closeEnvelope);
     
-    // Mostrar botón de cerrar
-    closeBtn.classList.add('visible');
-    
-    // Scroll suave hacia arriba para ver la carta completa
-    setTimeout(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }, 300);
-}
-
-/**
- * Cerrar la carta (vuelve a mostrar el sobre)
- */
-function closeEnvelope() {
-    const envelope = document.getElementById('envelope');
-    const letterContainer = document.getElementById('letterContainer');
-    const instruction = document.getElementById('instruction');
-    const closeBtn = document.getElementById('closeBtn');
-    
-    // Mostrar sobre
-    envelope.classList.remove('open');
-    
-    // Ocultar carta
-    letterContainer.classList.remove('visible');
-    
-    // Mostrar instrucción
-    instruction.classList.remove('hidden');
-    
-    // Ocultar botón de cerrar
-    closeBtn.classList.remove('visible');
-    
-    // Scroll de vuelta al centro
-    setTimeout(() => {
-        window.scrollTo({
-            top: document.body.scrollHeight / 2 - window.innerHeight / 2,
-            behavior: 'smooth'
-        });
-    }, 300);
-}
-
-/**
- * Cerrar con la tecla Escape
- */
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const closeBtn = document.getElementById('closeBtn');
-        if (closeBtn.classList.contains('visible')) {
+    // Cerrar con tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && closeBtn.classList.contains('visible')) {
             closeEnvelope();
         }
-    }
-});
-
-/**
- * Centrar la página al cargar
- */
-window.addEventListener('load', function() {
+    });
+    
+    // Centrar página al cargar
     window.scrollTo({
         top: document.body.scrollHeight / 2 - window.innerHeight / 2,
         behavior: 'auto'
     });
+    
+    console.log('Página cargada correctamente'); // Para debug
 });
